@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>PROYECTO2</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+    </head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">[OLC1]Proyecto2_201503841</a>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+          <ul class="navbar-nav mr-auto"> 
+            </ul>
+        </div>
+    </nav>
+    Seleccione el archivo:
+    <input type="file" id="archivoTexto">
+     <hr>
+    <p id="mensajes"></p>
+
+<legend>Entrada</legend>
+<div class="form-group">
+    <div id="codigo1" style="height: 300px; overflow: scroll;">
+       
+    </div>
+    <script type="text/javascript">
+        var editor = ace.edit('codigo1');
+                //Agregando formato de JAVA al editor
+                editor.setTheme("ace/theme/cobalt");
+                editor.session.setMode("ace/mode/java");
+                editor.setFontSize("14px");
+
+
+                function abrirArchivo(evento){
+                    let archivo = evento.target.files[0];
+                    if (archivo){
+                        let reader = new FileReader();
+        
+                        reader.onload=function(e){
+                            let contenido=e.target.result;
+        
+                            document.getElementById('codigo1').innerText = contenido;
+                        };
+        
+                        reader.readAsText(archivo);
+                        archivo.session.SetMode("ace/mode/java");
+        
+                    }else {
+                        document.getElementById('mensajes').innerText='No se selecciono archivo';
+                    }
+                }
+        
+                window.addEventListener('load',()=> {
+                    document.getElementById('archivoTexto').addEventListener('change',abrirArchivo);
+                    
+                    
+                });
+        
+               // var consola = ace.edit("Console");
+    </script>
+
+
+    <center>
+        <button type="button" class="btn btn-success" onclick="Traducir()">Traducir</button>
+    </center>
+    
+</div>
+<legend>Salida</legend>
+    <div class="form-group">
+         <textarea name="textarea" id="codigosalida" cols="200" rows="5" style="resize: both; overflow: scroll;"></textarea>
+           
+            
+     </div>
+     <legend>Reporte</legend>
+            <div class="form-group">
+                <textarea name="textarea" id="codigoreporte" cols="200" rows="5" style="resize: both; overflow: scroll;"></textarea>
+            </div>
+        </fieldset>
+    </form>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+    <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+    <div id="graph" style="text-align: center;"></div>
+    <script>
+        var contenido = "";
+        d3.select("#graph").graphviz()
+            .renderDot('digraph { nodo0[label="AST"];nodo1[label="LISTA_CLASES"];nodo0 -> nodo1;nodo2[label="CLASE"];nodo1 -> nodo2;nodo3[label=" Id: Prueba"]nodo2 -> nodo3;nodo4[label="SENTECIAS_GLOBALES"];nodo2 -> nodo4;nodo5[label="METODO"];nodo4 -> nodo5;nodo6[label="PARAMETROS: x,y "];nodo5 -> nodo6;nodo7[label="INSTRUCCIONES"];nodo5 -> nodo7;}');
+    </script>
+   
+
+
+
+
+    
+   
+
+</body>
+
+</html>
