@@ -38,6 +38,9 @@ func getTraduccion(w http.ResponseWriter, r *http.Request) {
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
 
 	defer resp.Body.Close()
 	bodyBytes, _ := ioutil.ReadAll(resp.Body)
